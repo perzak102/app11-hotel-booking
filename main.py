@@ -1,7 +1,6 @@
 import pandas
 
 df = pandas.read_csv("hotels.csv", dtype={"id": str})
-df.index = range(1, len(df) + 1)
 
 
 class Hotel:
