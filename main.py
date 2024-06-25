@@ -7,11 +7,12 @@ df.index = range(1, len(df) + 1)
 class Hotel:
     def __init__(self, hotel_id):
         self.hotel_id = hotel_id
+        self.name = df.loc[df["id"] == self.hotel_id, "name"].squeeze()
 
     def available(self):
         """Checks if the hotel is available"""
-        avaiability = df.loc[df["id"] == self.hotel_id, "available"].squeeze()
-        if avaiability == "yes":
+        availability = df.loc[df["id"] == self.hotel_id, "available"].squeeze()
+        if availability == "yes":
             return True
         else:
             return False
@@ -27,10 +28,16 @@ class Hotel:
 
 class ReservationTicket:
     def __init__(self, customer_name, hotel_object):
-        pass
-
+        self.customer_name = customer_name
+        self.hotel = hotel_object
     def generate(self):
-        pass
+        content = f"""
+        Thank you for your reservation!
+        Here are your booking data:
+        Name: {self.customer_name}
+        Hotel name: {self.hotel.name}
+        """
+        return content
 
 
 print(df)
@@ -39,7 +46,7 @@ hotel = Hotel(hotel_ID)
 if hotel.available():
     hotel.book()
     name = input("Enter your name: ")
-    reservation_ticket = ReservationTicket(name, hotel)
+    reservation_ticket = ReservationTicket(customer_name=name, hotel_object=hotel)
     reservation_ticket.generate()
     print(reservation_ticket.generate())
 else:
